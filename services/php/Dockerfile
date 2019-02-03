@@ -4,20 +4,23 @@ FROM php:7.2-fpm
 RUN apt-get update
 
 # Install Zip Extensions
-RUN apt-get update && apt-get install -y libzip-dev && docker-php-ext-install zip
+#RUN apt-get update && apt-get install -y zlib1g-dev zip unzip && docker-php-ext-install zip
+RUN apt-get update && apt-get install --no-install-recommends -y libzip-dev zip unzip \
+    && docker-php-ext-configure zip --with-libzip \
+    && docker-php-ext-install zip
 
 # Install MySql Extensions
-RUN apt-get update && apt-get install -y mysql-client && docker-php-ext-install pdo_mysql
+RUN apt-get update && apt-get install --no-install-recommends -y mysql-client && docker-php-ext-install pdo_mysql
 
 # Install Cryptography Extensions
-RUN apt-get update && apt-get install -y libmcrypt-dev && pecl install mcrypt-1.0.1
+RUN apt-get update && apt-get install --no-install-recommends -y libmcrypt-dev && pecl install mcrypt-1.0.1
 
 # Install Math Extensions
 RUN docker-php-ext-install bcmath
 
 #install Imagemagick & PHP Imagick ext
-RUN apt-get update && apt-get install -y && libmagickwand-dev --no-install-recommends
-RUN pecl install imagick && docker-php-ext-enable imagick
+RUN apt-get update && apt-get install --no-install-recommends -y pkg-config libmagickwand-dev -y && pecl install imagick
+RUN docker-php-ext-enable imagick
 
 # Install NodeJs
 RUN apt-get update && apt-get install -y nodejs

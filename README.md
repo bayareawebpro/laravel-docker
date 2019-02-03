@@ -16,14 +16,19 @@
 ### Start PHP Bash Shell
 `docker-compose exec php bash`
 
-### Create Laravel Project in Current Directory
+### Create Laravel Project in Current Directory (if needed)
 `composer create-project laravel/laravel .`
 
-### Migrate Database
+### Database
+The database host `DB_HOST=mysql` references the docker service IP.
+
+Grant Permissions to the "homestead" user.
+`mysql> GRANT ALL PRIVILEGES ON *.* TO 'homestead'@'%';`
+
 `php artisan:migrate`
 
 ### Stop Services
 `docker-compose down`
 
-### Force ReBuild Images
-`docker-compose up --force-recreate`
+### Run Built Container
+`docker run -v /var/www/html:/var/www/html -p 127.0.0.1:80:9000 bayareawebpro/laravel:jan-2018`

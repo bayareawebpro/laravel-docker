@@ -2,26 +2,32 @@ version: "3"
 services:
   nginx:
     image: nginx
-    container_name: "nginx"
+    container_name: nginx
     ports:
-      - "8080:80"
+      - 8080:80
     expose:
-      - "9000"
+      - 9000
     volumes:
       - ./src/:/var/www/html/
       - ./services/nginx/default.conf:/etc/nginx/conf.d/default.conf
   php:
-    build: ./services/php/
     container_name: php
+    build: ./services/php/
     volumes:
       - ./src:/var/www/html/
     environment:
       PHP_IDE_CONFIG: "serverName=laravel-docker"
   mysql:
-    image: "mysql:5.7"
     container_name: mysql
+    image: mysql:5.7
+    volumes:
+      - dbdata:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: forge
-      MYSQL_ROOT_PASSWORD: forge
+      MYSQL_DATABASE: homestead
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
     ports:
-      - "3307:3306"
+      - 3307:3306
+volumes:
+  dbdata:
