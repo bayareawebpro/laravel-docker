@@ -1,33 +1,39 @@
 FROM php:7.2-fpm
 
-# apt-get install
-RUN apt-get update \
-    && apt-get install -y libzip-dev \
-    && docker-php-ext-configure zip --with-libzip \
-    && docker-php-ext-install zip
+# Update Image
+RUN apt-get update
 
-# install mysql pdo
-RUN apt-get update \
-    && apt-get install -y libpq-dev \
-    && docker-php-ext-install pdo_mysql
+# Install Zip Extensions
+RUN apt-get update && apt-get install -y libzip-dev && docker-php-ext-install zip
 
-# install xdebug
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug
+# Install MySql Extensions
+RUN apt-get update && apt-get install -y mysql-client && docker-php-ext-install pdo_mysql
 
-COPY ./xdebug.ini /usr/local/etc/php/conf.d/
+# Install Cryptography Extensions
+RUN apt-get update && apt-get install -y libmcrypt-dev && pecl install mcrypt-1.0.1
 
-# install node
-RUN apt-get install -y nodejs
+# Install Math Extensions
+RUN docker-php-ext-install bcmath
 
-# composer install
+#install Imagemagick & PHP Imagick ext
+RUN apt-get update && apt-get install -y && libmagickwand-dev --no-install-recommends
+RUN pecl install imagick && docker-php-ext-enable imagick
+
+# Install NodeJs
+RUN apt-get update && apt-get install -y nodejs
+
+# Install Composer
 RUN cd /root/ && curl -sS https://getcomposer.org/installer | php
 RUN mv /root/composer.phar /usr/local/bin/composer
 
-# setting composer
+# Set Composer Environent Variables
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
 ENV PATH $PATH:/composer/vendor/bin
 
-# Laravel install
+# Install the Laravel Installer
 RUN composer global require "laravel/installer"
+
+# Install xDebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+COPY ./xdebug.ini /usr/local/etc/php/conf.d/
