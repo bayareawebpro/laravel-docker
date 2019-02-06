@@ -29,6 +29,3 @@ Grant Permissions to the "homestead" user.
 
 ### Stop Services
 `docker-compose down`
-
-### Run Built Container
-`docker run -v /var/www/html:/var/www/html -p 127.0.0.1:80:9000 bayareawebpro/laravel:jan-2018`
