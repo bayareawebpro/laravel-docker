@@ -1,11 +1,11 @@
 # laravel-docker
 
 # Environment
--PHP-FPM 7.2
--MySQL 5.7
--Laravel 5.7
--Ngnix 1.15
--xDebug 2.6.1
+* PHP-FPM 7.2
+* MySQL 5.7
+* Laravel 5.7
+* Ngnix 1.15
+* xDebug 2.6.1
 
 ### Build Images
 `docker-compose build`
