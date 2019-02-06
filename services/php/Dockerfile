@@ -1,6 +1,6 @@
 FROM php:7.2-fpm
 
-# Update Image
+# Update Packages
 RUN apt-get update
 
 # Install Zip Extensions
