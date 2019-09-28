@@ -1,42 +1,47 @@
-FROM php:7.2-fpm
-
-# Update Packages
+FROM php:7.3-fpm
 RUN apt-get update
+RUN apt-get install -y apt-utils pkg-config
+RUN apt-get upgrade -y
+RUN apt-get dist-upgrade -y
 
-# Install Zip Extensions
-#RUN apt-get update && apt-get install -y zlib1g-dev zip unzip && docker-php-ext-install zip
-RUN apt-get update && apt-get install --no-install-recommends -y libzip-dev zip unzip \
-    && docker-php-ext-configure zip --with-libzip \
-    && docker-php-ext-install zip
+#=== Install Extensions ===============================================================#
+# Zip
+RUN apt-get update && apt-get install --no-install-recommends -y libzip-dev zip unzip
+RUN docker-php-ext-configure zip --with-libzip
+RUN docker-php-ext-install zip
 
-# Install MySql Extensions
-RUN apt-get update && apt-get install --no-install-recommends -y mysql-client && docker-php-ext-install pdo_mysql
+# MySql
+RUN apt-get update && apt-get install --no-install-recommends -y mysql-client-*
+RUN docker-php-ext-install pdo_mysql
 
-# Install Cryptography Extensions
-RUN apt-get update && apt-get install --no-install-recommends -y libmcrypt-dev && pecl install mcrypt-1.0.1
+# Cryptography
+RUN apt-get update && apt-get install --no-install-recommends -y libmcrypt-dev
+RUN pecl install mcrypt-1.0.2
 
-# Install Math Extensions
+# Math (Telescope)
 RUN docker-php-ext-install bcmath
 
-#install Imagemagick & PHP Imagick ext
-RUN apt-get update && apt-get install --no-install-recommends -y pkg-config libmagickwand-dev -y && pecl install imagick
+# Imagick
+RUN apt-get update && apt-get install --no-install-recommends -y libmagickwand-dev
+RUN pecl install imagick
 RUN docker-php-ext-enable imagick
 
-# Install NodeJs
-RUN apt-get update && apt-get install -y nodejs
+# Install xDebug
+# RUN pecl install xdebug && docker-php-ext-enable xdebug
+# COPY ./xdebug.ini /usr/local/etc/php/conf.d/
 
-# Install Composer
-RUN cd /root/ && curl -sS https://getcomposer.org/installer | php
-RUN mv /root/composer.phar /usr/local/bin/composer
-
-# Set Composer Environent Variables
+#=== Composer ================================================================#
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
 ENV PATH $PATH:/composer/vendor/bin
+RUN cd /root/ && curl -sS https://getcomposer.org/installer | php
+RUN mv /root/composer.phar /usr/local/bin/composer
 
-# Install the Laravel Installer
-RUN composer global require "laravel/installer"
+#=== NodeJs ==================================================================#
+RUN apt-get install --no-install-recommends -y npm
 
-# Install xDebug
-RUN pecl install xdebug && docker-php-ext-enable xdebug
-COPY ./xdebug.ini /usr/local/etc/php/conf.d/
+#=== Clean Up ================================================================#
+RUN apt autoremove && apt-get autoclean
+
+#=== Respository =============================================================#
+#RUN composer install APP_REPOSITORY;

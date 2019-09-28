@@ -1,31 +1,52 @@
-# laravel-docker
+# Laravel Docker 2019
 
-# Environment
-* PHP-FPM 7.2
-* MySQL 5.7
-* Laravel 5.7
-* Ngnix 1.15
-* xDebug 2.6.1
+### Environment
+- MySQL 5.7
+- PHP-FPM 7.3
+- Ngnix (latest)
+- Laravel (latest)
+- xDebug (optional)
 
-### Build Images
-`docker-compose build`
+### Build / Destroy Images
+- `docker-compose build`
+- `docker rm --force php`
+- `docker rm --force mysql`
+- `docker rm --force nginx`
+- `docker rm --force redis`
 
-### Start Services & Detach Console: 
-`docker-compose up -d` 
+### Start / Stop Services
+- `docker-compose up` (listen)
+- `docker-compose up -d` (detach)
+- `docker-compose down` 
 
-### Start PHP Bash Shell
-`docker-compose exec php bash`
+### Bash Shell
+- `docker-compose exec php bash`
+- `docker-compose exec mysql bash`
+- `docker-compose exec nginx bash`
+- `docker-compose exec redis bash`
+- `exit`
 
-### Create Laravel Project in Current Directory (if needed)
-`composer create-project laravel/laravel .`
+### Stop Services 
 
-### Database
+### Restart Nginx
+- `docker-compose exec nginx bash`
+- `kill -USR2 1`
+
+### Database (Port 3306)
+
 The database host `DB_HOST=mysql` references the docker service IP.
 
-Grant Permissions to the "homestead" user.
-`mysql> GRANT ALL PRIVILEGES ON *.* TO 'homestead'@'%';`
+- `docker-compose exec mysql bash`
+- `mysql -u root -plaravel`
 
-`php artisan:migrate`
+```
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=laravel
+DB_PASSWORD=laravel
+```
 
 ### Stop Services
-`docker-compose down`
+- `docker-compose down`
