@@ -6,6 +6,7 @@
 - NPM (latest)
 - NGINX (latest)
 - Laravel (latest)
+- Horizon (latest)
 - xDebug (optional)
 
 ### Build Images
@@ -47,16 +48,9 @@ The database host `DB_HOST=mysql` references the docker service IP.
 - `docker-compose exec mysql bash`
 - `mysql -u root -plaravel`
 
-```
-DB_CONNECTION=mysql
-DB_HOST=mysql
-DB_PORT=3306
-DB_DATABASE=laravel
-DB_USERNAME=laravel
-DB_PASSWORD=laravel
-```
-
 ### Redis Cache
+The database host `REDIS_HOST=redis` references the docker service IP.
+
 - `docker-compose exec redis bash`
 
 Configure as Auto-Expiring Cache

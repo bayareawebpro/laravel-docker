@@ -4,17 +4,25 @@ RUN apt-get install -y apt-utils pkg-config
 
 #=== Install Extensions ===============================================================#
 
-# Zip
-RUN apt-get update && apt-get install --no-install-recommends -y libzip-dev zip unzip git
-RUN docker-php-ext-configure zip --with-libzip
-RUN docker-php-ext-install zip
+# Redis
+RUN pecl install redis && docker-php-ext-enable redis
 
 # MySql
-RUN apt-get update && apt-get install --no-install-recommends -y mysql-client-*
-RUN docker-php-ext-install pdo_mysql
+RUN apt-get update && apt-get install -y mysql-client-*
+RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-enable pdo_mysql
 
-# Cryptography
-RUN apt-get update && apt-get install --no-install-recommends -y libmcrypt-dev
+# Sqlite
+RUN apt-get update && apt-get install -y libsqlite3-dev
+RUN docker-php-ext-install pdo pdo_sqlite
+RUN docker-php-ext-enable pdo_sqlite
+
+# Zip
+RUN apt-get update && apt-get install -y libzip-dev zip unzip
+RUN docker-php-ext-configure zip --with-libzip
+
+# Cryptography (Encrypter)
+RUN apt-get update && apt-get install -y libmcrypt-dev
 RUN pecl install mcrypt-1.0.2
 
 # Math (Telescope)
@@ -23,14 +31,32 @@ RUN docker-php-ext-install bcmath
 # OpCache
 RUN docker-php-ext-install opcache
 
+# Memcached
+RUN apt-get install -y libmemcached-dev
+RUN pecl install memcached
+RUN docker-php-ext-enable memcached
+
 # Imagick
 #RUN apt-get update && apt-get install --no-install-recommends -y libmagickwand-dev
 #RUN pecl install imagick
 #RUN docker-php-ext-enable imagick
 
+# Pcntl (Horizon)
+RUN pecl channel-update pecl.php.net
+RUN docker-php-ext-install pcntl
+
 # Install xDebug
 # RUN pecl install xdebug && docker-php-ext-enable xdebug
 # COPY ./xdebug.ini /usr/local/etc/php/conf.d/
+
+#=== Supervisor ================================================================#
+RUN apt-get install -y supervisor
+RUN apt-get install -y procps
+RUN mkdir -p /var/log/supervisor
+#CMD ["/usr/bin/supervisord"]
+
+#=== NodeJs ==================================================================#
+#RUN apt-get install --no-install-recommends -y npm
 
 #=== Composer ================================================================#
 ENV COMPOSER_ALLOW_SUPERUSER 1
@@ -39,5 +65,5 @@ ENV PATH $PATH:/composer/vendor/bin
 RUN cd /usr/local/bin/ && curl -sS https://getcomposer.org/installer | php
 RUN mv /usr/local/bin/composer.phar /usr/local/bin/composer
 
-#=== NodeJs ==================================================================#
-RUN apt-get install --no-install-recommends -y npm
+# GIT
+RUN apt-get update && apt-get install -y git
