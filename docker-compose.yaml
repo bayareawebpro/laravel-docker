@@ -10,7 +10,7 @@ services:
       - ./data/mysql:/var/lib/mysql
       - ./services/mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
       - ./services/mysql/mysqldump.cnf:/etc/mysql/conf.d/mysqldump.cnf
-      - ./services/mysql/mysqldump.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+      - ./services/mysql/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
     environment:
       MYSQL_USER: laravel
       MYSQL_DATABASE: laravel
