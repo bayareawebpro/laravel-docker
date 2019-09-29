@@ -3,7 +3,8 @@
 ### Environment
 - MySQL 5.7
 - PHP-FPM 7.3
-- Ngnix (latest)
+- NPM (latest)
+- NGINX (latest)
 - Laravel (latest)
 - xDebug (optional)
 
