@@ -1,0 +1,1 @@
+COPY profile /var/lib/boot2docker/profile

@@ -1,4 +1,6 @@
 # Laravel Docker 2019
+- http://localhost/horizon/dashboard
+- http://localhost/telescope/requests
 
 ### Environment
 - MySQL 5.7
@@ -30,13 +32,11 @@
 - `docker cp ae732473905f:/usr/local/etc ~/Desktop`
 - `docker rm --force <containerId>`
 
-
 ### Nginx
 - /etc/nginx/nginx.conf
 - `docker-compose exec nginx bash`
 - `service nginx status`
 - `service nginx restart`
-
 
 ### PHP-FPM
 - `docker-compose exec php bash`
@@ -60,3 +60,10 @@ config set maxmemory 256mb
 config set maxmemory-policy allkeys-lru
 config rewrite
 ```
+
+# DockerCloud
+Connect a Repo to Build on Push
+> https://cloud.docker.com/
+
+# DockerMachine
+> https://docs.docker.com/machine/install-machine/
