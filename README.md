@@ -32,7 +32,8 @@
 ### Nginx
 - /etc/nginx/nginx.conf
 - `docker-compose exec nginx bash`
-- `kill -USR2 1`
+- `service nginx status`
+- `service nginx restart`
 
 
 ### PHP-FPM
