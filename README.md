@@ -7,14 +7,10 @@
 - Laravel (latest)
 - xDebug (optional)
 
-### Build / Destroy Images
+### Build Images
 - `docker-compose build`
-- `docker rm --force php`
-- `docker rm --force mysql`
-- `docker rm --force nginx`
-- `docker rm --force redis`
 
-### Start / Stop Services
+### Mange Services
 - `docker-compose up` (listen)
 - `docker-compose up -d` (detach)
 - `docker-compose down` 
@@ -26,13 +22,19 @@
 - `docker-compose exec redis bash`
 - `exit`
 
-### Stop Services 
+### Copy Files
+- `docker ps` (list container IDs)
+- `docker cp <containerId>:/file/path/within/container /my/path`
+- `docker cp ae732473905f:/usr/local/etc ~/Desktop`
+- `docker rm --force <containerId>`
 
-### Restart Nginx
+
+### Nginx
+- /etc/nginx/nginx.conf
 - `docker-compose exec nginx bash`
 - `kill -USR2 1`
 
-### Database (Port 3306)
+### Database
 
 The database host `DB_HOST=mysql` references the docker service IP.
 
@@ -47,6 +49,3 @@ DB_DATABASE=laravel
 DB_USERNAME=laravel
 DB_PASSWORD=laravel
 ```
-
-### Stop Services
-- `docker-compose down`
