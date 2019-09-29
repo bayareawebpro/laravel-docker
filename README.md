@@ -67,3 +67,4 @@ Connect a Repo to Build on Push
 
 # DockerMachine
 > https://docs.docker.com/machine/install-machine/
+> https://blog.machinebox.io/deploy-machine-box-in-digital-ocean-385265fbeafd
