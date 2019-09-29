@@ -34,8 +34,12 @@
 - `docker-compose exec nginx bash`
 - `kill -USR2 1`
 
-### Database
 
+### PHP-FPM
+- `docker-compose exec php bash`
+- `kill -USR2 1`
+
+### Database
 The database host `DB_HOST=mysql` references the docker service IP.
 
 - `docker-compose exec mysql bash`
@@ -48,4 +52,15 @@ DB_PORT=3306
 DB_DATABASE=laravel
 DB_USERNAME=laravel
 DB_PASSWORD=laravel
+```
+
+### Redis Cache
+- `docker-compose exec redis bash`
+
+Configure as Auto-Expiring Cache
+```
+redis-cli
+config set maxmemory 256mb
+config set maxmemory-policy allkeys-lru
+config rewrite
 ```

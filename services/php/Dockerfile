@@ -1,7 +1,5 @@
 FROM php:7.3-fpm
 RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get dist-upgrade -y
 RUN apt-get install -y apt-utils pkg-config
 
 #=== Install Extensions ===============================================================#
@@ -25,14 +23,6 @@ RUN docker-php-ext-install bcmath
 # OpCache
 RUN docker-php-ext-install opcache
 
-ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="1" \
-    PHP_OPCACHE_MAX_ACCELERATED_FILES="10000" \
-    PHP_OPCACHE_MEMORY_CONSUMPTION="192" \
-    PHP_OPCACHE_MAX_WASTED_PERCENTAGE="10"
-
-RUN docker-php-ext-install opcache
-COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
-
 # Imagick
 #RUN apt-get update && apt-get install --no-install-recommends -y libmagickwand-dev
 #RUN pecl install imagick
@@ -51,10 +41,3 @@ RUN mv /usr/local/bin/composer.phar /usr/local/bin/composer
 
 #=== NodeJs ==================================================================#
 RUN apt-get install --no-install-recommends -y npm
-
-#=== Clean Up ================================================================#
-#RUN apt-get autoremove > /dev/null 2>&1
-#RUN apt-get autoclean > /dev/null 2>&1
-
-#=== Respository =============================================================#
-#RUN composer install APP_REPOSITORY;
