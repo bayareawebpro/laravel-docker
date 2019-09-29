@@ -1,2 +1,2 @@
-FROM php:7.3-fpm
+FROM bayareawebpro/laravel-docker
 ENV APP_ENV=staging
