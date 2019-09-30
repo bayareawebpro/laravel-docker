@@ -2,6 +2,8 @@
 - http://localhost/horizon/dashboard
 - http://localhost/telescope/requests
 
+> https://devhints.io/docker-compose
+
 ### Environment
 - MySQL 5.7
 - PHP-FPM 7.3
