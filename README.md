@@ -71,6 +71,15 @@ config rewrite
 Connect a Repo to Build on Push
 > https://cloud.docker.com/
 
+
 # DockerMachine
 > https://docs.docker.com/machine/install-machine/
 > https://blog.machinebox.io/deploy-machine-box-in-digital-ocean-385265fbeafd
+
+# DigitalOcean Image
+
+```
+git init .
+git remote add origin <repository-url>
+git pull origin master
+```

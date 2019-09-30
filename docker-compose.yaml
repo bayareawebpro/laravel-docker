@@ -1,5 +1,31 @@
 version: "3"
 services:
+  php:
+    container_name: php
+    restart: always
+    build: .
+    volumes:
+      - ./src:/var/www/html
+      - ./data/storage:/var/www/html/storage
+      - ./data/php-fpm:/usr/local/var/log
+      - ./services/php/php-fpm.conf:/usr/local/etc/php/php-fpm.conf
+      - ./services/php/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
+    environment:
+      PHP_IDE_CONFIG: "serverName=docker"
+    depends_on:
+      - mysql
+      - redis
+  worker:
+    container_name: worker
+    build: .
+    volumes:
+      - ./src:/var/www/html
+      - ./data/storage:/var/www/html/storage
+      - ./services/supervisor:/etc/supervisor/conf.d
+    command: php artisan horizon
+    depends_on:
+      - redis
+      - php
   mysql:
     container_name: mysql
     restart: always
@@ -27,31 +53,6 @@ services:
       - /usr/local/etc/redis/redis.conf
     #ports:
     #  - 6379:6379
-  php:
-    container_name: php
-    restart: always
-    build: ./services/php
-    volumes:
-      - ./src:/var/www/html
-      - ./data/storage:/var/www/html/storage
-      - ./data/php-fpm:/usr/local/var/log
-      - ./services/php/php-fpm.conf:/usr/local/etc/php/php-fpm.conf
-      - ./services/php/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
-    environment:
-      PHP_IDE_CONFIG: "serverName=docker"
-    depends_on:
-      - mysql
-      - redis
-  worker:
-    container_name: worker
-    build: ./services/php
-    volumes:
-      - ./src:/var/www/html
-      - ./data/storage:/var/www/html/storage
-      - ./services/supervisor:/etc/supervisor/conf.d
-    command: php artisan horizon
-    depends_on:
-      - redis
   nginx:
     container_name: nginx
     restart: always

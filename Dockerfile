@@ -1,7 +1,7 @@
 FROM php:7.3-fpm
-RUN apt-get update
+RUN apt-get -y update
+RUN apt-get -y upgrade
 RUN apt-get install -y apt-utils pkg-config
-
 #=== Install Extensions ===============================================================#
 
 # Redis
@@ -67,3 +67,6 @@ RUN mv /usr/local/bin/composer.phar /usr/local/bin/composer
 
 # GIT
 RUN apt-get update && apt-get install -y git
+
+# CleanUp
+RUN apt-get autoremove
