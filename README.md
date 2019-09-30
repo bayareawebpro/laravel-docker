@@ -11,7 +11,10 @@
 - NGINX (latest)
 - Laravel (latest)
 - Horizon (latest)
+- OpCache (latest)
 - xDebug (optional)
+- Memcached (latest)
+- Supervisor (latest)
 
 ### Build Images
 - `docker-compose build`
@@ -26,6 +29,7 @@
 - `docker-compose exec mysql bash`
 - `docker-compose exec nginx bash`
 - `docker-compose exec redis bash`
+- `docker-compose exec worker bash`
 - `exit`
 
 ### Copy Files
