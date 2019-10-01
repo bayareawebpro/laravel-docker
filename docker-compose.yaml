@@ -6,10 +6,9 @@ services:
     build: .
     volumes:
       - ./src:/var/www/html
-      - ./data/storage:/var/www/html/storage
-      - ./data/php-fpm:/usr/local/var/log
       - ./services/php/php-fpm.conf:/usr/local/etc/php/php-fpm.conf
       - ./services/php/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
+      - ./data/php-fpm:/usr/local/var/log
     environment:
       PHP_IDE_CONFIG: "serverName=docker"
     depends_on:
@@ -20,7 +19,8 @@ services:
     build: .
     volumes:
       - ./src:/var/www/html
-      - ./data/storage:/var/www/html/storage
+      - ./services/php/php-fpm.conf:/usr/local/etc/php/php-fpm.conf
+      - ./services/php/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
       - ./services/supervisor:/etc/supervisor/conf.d
     command: php artisan horizon
     depends_on:
@@ -30,8 +30,8 @@ services:
     container_name: mysql
     restart: always
     build: ./services/mysql
-    ports:
-      - 3306:3306
+    #ports:
+    #  - 3306:3306
     volumes:
       - ./data/mysql:/var/lib/mysql
       - ./services/mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf

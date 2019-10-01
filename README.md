@@ -3,6 +3,7 @@
 - http://localhost/telescope/requests
 
 > https://devhints.io/docker-compose
+> chown -R www-data: /root/app
 
 ### Environment
 - MySQL 5.7

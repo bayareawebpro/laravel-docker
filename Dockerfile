@@ -73,3 +73,4 @@ RUN apt-get install -y git
 
 # CleanUp
 RUN apt-get autoremove
+RUN chown -R www-data:www-data /var/www/html
