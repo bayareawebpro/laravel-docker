@@ -1,3 +1,6 @@
 .idea/
 data/mysql/*
 /services/nginx/includes/redirects.conf
+services/nginx/ssl-dhparams.pem
+services/docker/profile
+services/nginx/ssl-dhparams.pem
